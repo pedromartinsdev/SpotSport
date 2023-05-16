@@ -1,0 +1,120 @@
+/* Estilos personalizados */
+body {
+  font-family: "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+header {
+  background: linear-gradient(to right, #28a745, #007bff);
+}
+
+header nav a {
+  color: #fff !important;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+header nav a:hover {
+  color: #f5f5f5 !important;
+}
+
+header h1 a {
+  color: #fff;
+  text-decoration: none;
+}
+
+header h1 a:hover {
+  color: #f5f5f5;
+}
+
+.bg-light {
+  background-color: #f5f5f5;
+}
+
+.btn-primary {
+  background-color: #28a745;
+  border-color: #28a745;
+  font-size: 1.2rem;
+}
+
+.btn-primary:hover {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.card {
+  background-color: #fff;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+footer {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  padding: 30px;
+}
+
+footer p {
+  font-size: 1.1rem;
+  margin-bottom: 0;
+}
+
+.card-img-top {
+  width: 100%; /* Define a largura da imagem como 100% do tamanho da div */
+  max-height: 100%; /* Define a altura da imagem como 100% do tamanho da div */
+  object-fit: cover;
+  display: block;
+  
+}
+
+.card-body{
+  padding: 2rem;
+}
+
+section, div.row, div.text-center.mt-4 {
+  margin: 3rem 0;
+}
+
+section.py-5 {
+  margin: 0;
+}
+
+.texto{
+  width: 100%;
+}
+
+.header-itens {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.list-unstyled, nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex: 1;
+  margin: 0;
+}
+
+.list-unstyled > li >a {
+  font-size: 2rem;
+}

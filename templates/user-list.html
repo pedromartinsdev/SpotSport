@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Pessoas
+{% endblock %}
+
+{% block main %}
+<div class="row">
+    {% for user in users %}
+    <div class="col-md-2">
+        <div class="card">
+            <h4 class="card-title text-capitalize">{{user.name}}</h4>
+            <p class="card-text">@{{user.username}} - {{user.country}}</p>
+
+            <!-- Botão para abrir o modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal-{{ user.name }}">Ler mais</button>
+
+            <!-- O modal -->
+            <div id="myModal-{{ user.name }}" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"> @{{ user.username }}</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Nome: {{ user.name }}</p>
+                            <p>Data de nascimento: {{ user.birth_date }}</p>
+                            <p>Sexo: {{ user.gender }}</p>
+                            <p>País: {{ user.country }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+{% endblock %}
