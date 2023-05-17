@@ -5,6 +5,15 @@ Pessoas
 {% endblock %}
 
 {% block main %}
+<div class="align- container-bar">
+    <h2 class="text-left">Amigos</h2>
+    <form action="/user-list" method="POST">
+        <div class="container-search">
+            <input type="text" name="username" class="form-control" placeholder="Digite o @username">
+            <button class="btn btn-primary" type="submit">Pesquisar</button>
+        </div>
+    </form>
+</div>
 <div class="row">
     {% for user in users %}
     <div class="col-md-2">
@@ -13,10 +22,11 @@ Pessoas
             <p class="card-text">@{{user.username}} - {{user.country}}</p>
 
             <!-- Botão para abrir o modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal-{{ user.name }}">Ler mais</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal-{{ user.id }}">Ler
+                mais</button>
 
             <!-- O modal -->
-            <div id="myModal-{{ user.name }}" class="modal fade" role="dialog">
+            <div id="myModal-{{ user.id }}" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">

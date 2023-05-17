@@ -17,6 +17,7 @@ app.secret_key = "minha_chave_secreta"
 engine = create_engine('sqlite:///database.db')
 Base = declarative_base()
 
+
 class User(Base, UserMixin):
     __tablename__ = 'users'
 
@@ -47,6 +48,7 @@ class User(Base, UserMixin):
     def is_anonymous(self):
         return False
 
+
 class Event(Base):
     __tablename__ = 'events'
 
@@ -59,6 +61,7 @@ class Event(Base):
     creator_id = Column(Integer, ForeignKey('users.id'))
     user = relationship("User", backref="events")
 
+
 class Record(Base):
     __tablename__ = 'records'
     id = Column(Integer, primary_key=True)
@@ -67,9 +70,11 @@ class Record(Base):
     event_id = Column(Integer, ForeignKey('events.id'))
     event = relationship("Event", backref="records")
 
+
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -79,6 +84,7 @@ def load_user(user_id):
 @app.route('/landing-page')
 def landing_page():
     return render_template('landing-page.html')
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -95,6 +101,7 @@ def login():
             flash('Invalid email or password.')
     return render_template('login.html')
 
+
 @app.route('/logout')
 @login_required
 def logout():
@@ -105,6 +112,7 @@ def logout():
     print(session)
     return redirect('/login')
 
+
 @app.route('/password', methods=['GET', 'POST'])
 @login_required
 def password():
@@ -113,12 +121,33 @@ def password():
         return render_template('password-apologize.html', email=email)
     return render_template('password.html')
 
+
 @app.route('/home')
 @login_required
 def home():
     username = current_user.username
-    events = session.query(Event).all()
-    return render_template('home.html', events=events, username=username)
+    user_id = current_user.id
+    myEvents = session.query(Event).filter_by(creator_id=user_id)
+    subscribeEvents = session.query(Record).filter_by(user_id=user_id)
+
+    return render_template('home.html', myEvents=myEvents, subscribeEvents=subscribeEvents, username=username)
+
+@app.route('/records', methods=['GET', 'POST'])
+@login_required
+def records():
+    username = current_user.username
+    user_id = current_user.id
+    if request.method == 'POST':
+        eventId = request.form['id']
+        record = Record(user_id=user_id, event_id=eventId)
+        session.add(record)
+        session.commit()
+        session.close()
+
+        return render_template('records.html', records=records, username=username)
+    else:
+        records = session.query(Record).all()
+        return render_template('records.html', records=records, username=username)
 
 @app.route('/')
 def index():
@@ -131,23 +160,34 @@ def index():
         return render_template('login.html')
 
 
-@app.route('/event-list')
+@app.route('/event-list', methods=['GET', 'POST'])
 @login_required
 def event_list():
-    events = session.query(Event).all()
     username = current_user.username
+    if request.method == 'POST':
+        city = request.form['city']
+        events = session.query(Event).filter_by(location=city)
+        return render_template('event-list.html', events=events, username=username)
+    else:
+        events = session.query(Event).all()
     return render_template('event-list.html', events=events, username=username)
 
-@app.route('/user-list')
+
+@app.route('/user-list', methods=['GET', 'POST'])
 @login_required
 def user_list():
     username = current_user.username
-    users = session.query(User).all()
+    if request.method == 'POST':
+        usernameSearch = request.form['username']
+        users = session.query(User).filter_by(username=usernameSearch)
+        return render_template('user-list.html', users=users, username=username)
+    else:
+        users = session.query(User).all()
     return render_template('user-list.html', users=users, username=username)
+
 
 @app.route('/users', methods=['GET', 'POST'])
 def create():
-    username = current_user.username
     if request.method == 'POST':
         name = request.form['name']
         username = request.form['username']
@@ -160,16 +200,17 @@ def create():
         gender = request.form['gender']
         user_verify = False
         phone_number = request.form['phone_number']
-        
+
         user = User(name=name, username=username, address=address, country=country,
                     birth_date=birth_date, gender=gender, user_verify=user_verify, phone_number=phone_number, email=email, password=password)
-        
+
         session = Session()
         session.add(user)
         session.commit()
         session.close()
         return redirect('/login')
-    return render_template('login.html', username=username)
+    return render_template('users.html')
+
 
 @app.route('/events', methods=['GET', 'POST'])
 @login_required
@@ -181,7 +222,7 @@ def events():
         location = request.form['location']
         country = request.form['country']
         date_str = request.form['date']
-        creator_id = 1
+        creator_id = current_user.id
 
         date = parse(date_str).date()
 

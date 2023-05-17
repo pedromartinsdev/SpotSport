@@ -5,64 +5,53 @@ Eventos
 {% endblock %}
 
 {% block main %}
-<div>
-  <div class="bar">
-    <div class="container mt-5">
-      <a class="btn btn-primary" href="/events">Novo evento</a>
+<h2 class="text-left">Eventos</h2>
+<div class="container-bar">
+  <a class="btn btn-primary" href="/events">Novo evento</a>
+  <form action="/event-list" method="POST">
+    <div class="container-search">
+      <input type="text" name="city" class="form-control" placeholder="Cidade">
+      <button class="btn btn-primary" type="submit">Pesquisar</button>
     </div>
+  </form>
+</div>
 
-    <div class="search">
-      <div class="row">
-        <div class="col-md-6 offset-md-3">
-          <form>
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" placeholder="Digite sua pesquisa">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="submit">Pesquisar</button>
+<div class="container mt-5">
+  <div class="row-cols-xl-4">
+    {% for event in events %}
+    <div class="col-md-3">
+      <div class="card card-event">
+        <h4 class="card-title text-capitalize">{{event.title}}</h4>
+        <p class="card-text">{{event.location}} - {{event.country}}</p>
+
+        <!-- Botão para abrir o modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal-{{ event.id }}">Ler
+          mais</button>
+
+        <!-- O modal -->
+        <div id="myModal-{{ event.id }}" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title"> {{ event.title }}</h2>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
               </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-  </div>
-  <br>
-  <br>
-  <div class="container mt-5">
-    <h2 class="text-left mb-4">Eventos</h2>
-    <div class="row-cols-xl-4">
-      {% for event in events %}
-      <div class="col-md-3">
-        <div class="card card-event">
-          <h4 class="card-title text-capitalize">{{event.title}}</h4>
-          <p class="card-text">{{event.location}} - {{event.country}}</p>
-
-          <!-- Botão para abrir o modal -->
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal-{{ event.id }}">Ler
-            mais</button>
-
-          <!-- O modal -->
-          <div id="myModal-{{ event.id }}" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h2 class="modal-title"> {{ event.title }}</h2>
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                  <p>Descrição: {{ event.description }}</p>
-                  <p>Data: {{ event.date }}</p>
-                  <p>Local: Lago - <span> Horário 12:30hrs</span></p>
-                  <p>Cidade: {{ event.location }} - País: {{ event.country }}</p>
-                </div>
+              <div class="modal-body">
+                <p>Descrição: {{ event.description }}</p>
+                <p>Data: {{ event.date }}</p>
+                <p>Local: Lago - <span> Horário 12:30hrs</span></p>
+                <p>Cidade: {{ event.location }} - País: {{ event.country }}</p>
+                <form method="POST" action="/records">
+                  <input name="id" style="display: none;" value="{{ event.id }}"></input>
+                  <button type="submit" class="btn btn-primary">Inscrever</button>
+                </form>
               </div>
             </div>
           </div>
         </div>
       </div>
-      {% endfor %}
     </div>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}
