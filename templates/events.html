@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Eventos
+Eventos
 {% endblock %}
 
 {% block main %}
@@ -11,22 +11,22 @@
     <form action="/events" method="post">
       <div class="form-group">
         <label for="title">Nome do evento:</label>
-        <input type="text" class="form-control" id="title" name="title" placeholder="Digite seu nome">
+        <input type="text" class="form-control" id="title" name="title" placeholder="Dê um nome legal para seu evento">
       </div>
       <div class="form-group">
         <label for="description">Descrição:</label>
-        <textarea id="description" class="form-control"  name="description" name="description" placeholder="Descreva como será o evento" rows="3"></textarea><br>
+        <textarea id="description" class="form-control" name="description" name="description"
+          placeholder="Descreva como será o evento" rows="3"></textarea><br>
       </div>
       <div class="form-group">
         <label for="location">Localização:</label>
-        <input type="text" class="form-control" id="location" name="location"></input>
-
-        <label for="country">País:</label>
-        <input type="text" class="form-control" id="country" name="country"></input>
+        <input type="text" class="form-control" id="location" name="location" placeholder="Adicione o endereço completo, rua, cidade, estado e país"></input>
       </div>
       <div class="form-group">
         <label for="date">Data:</label>
         <input type="date" class="form-control" id="date" name="date"></input>
+        <label for="time">Hora:</label>
+        <input type="time" class="form-control" id="time" name="time"></input>
       </div>
       <button type="submit" class="btn btn-success">Criar</button>
       <a href="/event-list" class="btn btn-danger">Cancelar</a>

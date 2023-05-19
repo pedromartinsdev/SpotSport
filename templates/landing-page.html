@@ -5,30 +5,74 @@
   <meta charset="UTF-8">
   <title>SpotSport - Encontre pessoas e divirta-se praticando esportes</title>
   <!-- Inclusão do Bootstrap CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <link href="/static/favicon.ico" rel="icon">
   <link href="/static/landing-page.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Personalizações adicionais */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header-itens {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .texto {
+      color: #fff;
+    }
+
+    .texto h2 {
+      font-size: 2.5em;
+    }
+
+    .texto p {
+      font-size: 1.5em;
+    }
+
+    .card {
+      height: 100%;
+    }
+
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card-title {
+      font-size: 1.5em;
+    }
+
+    .btn-primary {
+      font-size: 1.2em;
+    }
+  </style>
 </head>
 
 <body>
   <header class="py-4">
-    <div class="container d-inline-flex flex-row justify-content-between align-items-center header-itens">
-      <h1 class="mb-0"><a href="/login" class="text-reset">SpotSport</a></h1>
+    <div class="container d-flex flex-row justify-content-between align-items-center header-itens">
+      <h1 class="brand">SpotSport</h1>
       <nav>
         <ul class="list-unstyled">
           <li><a href="/login" class="text-reset">Sobre nós</a></li>
           <li><a href="/login" class="text-reset">Eventos</a></li>
-          <li><a href="/login" class="btn btn-primary glyphicon glyphicon-log-in text-reset"> Login</a></li>
+          <li class="d-flex align-items-center justify-content-between"></span><a href="/login" class="btn btn-primary">Login</a></li>
         </ul>
       </nav>
     </div>
   </header>
   <main>
-    <section class="py-5"
-      style="background-image: url(https://images.unsplash.com/photo-1526772662000-3f88f10405ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80); background-size: cover;">
+    <section class="py-5" style="background-color: #151A24; background-size: cover;">
       <div class="container">
         <div class="row d-flex align-items-center justify-content-center texto">
           <div class="d-flex flex-column col-lg-6 text-center text-md-start texto">
@@ -88,28 +132,26 @@
         </div>
       </div>
     </section>
-    <section class="py-5"
-      style="background-image: url(https://images.unsplash.com/photo-1542727568-395b760e571d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80); background-size: cover;">
+    <section class="py-5" style="background-color: #151A24; background-size: cover;">
       <div class="container">
-        <h2 class="text-center text-white mb-4">Conheça a SpotSport</h2>
+        <h2 class="text-center texto mb-4">Conheça a SpotSport</h2>
         <div class="row align-items-center">
           <div class="col-md-6">
-            <p class="lead text-white mb-4">A SpotSport é a plataforma ideal para quem busca novas experiências e quer
-              se conectar com pessoas que compartilham da mesma paixão por esportes e entretenimento. Aqui, você pode
-              criar eventos, encontrar outras pessoas interessadas em atividades específicas e se divertir ao máximo.
+            <p class="lead texto mb-4">A SpotSport é a plataforma ideal para quem busca novas experiências e quer
+              se conectar com pessoas que compartilham da mesma paixão por esportes e entretenimento.
             </p>
-            <ul class="list-unstyled">
+            <ul class="list-inline mr-5">
               <li class="d-flex align-items-center mb-3">
                 <i class="bi bi-check2-circle fs-4 text-primary me-3"></i>
-                <span class="text-white">Conecte-se com pessoas que compartilham da mesma paixão</span>
+                <span class="texto">Conecte-se com pessoas que compartilham da mesma paixão</span>
               </li>
               <li class="d-flex align-items-center mb-3">
                 <i class="bi bi-check2-circle fs-4 text-primary me-3"></i>
-                <span class="text-white">Crie e participe de eventos em diversos locais</span>
+                <span class="texto">Crie e participe de eventos em diversos locais</span>
               </li>
               <li class="d-flex align-items-center mb-3">
                 <i class="bi bi-check2-circle fs-4 text-primary me-3"></i>
-                <span class="text-white">Divirta-se e faça novas amizades</span>
+                <span class="texto">Divirta-se e faça novas amizades</span>
               </li>
             </ul>
             <a href="/login" class="btn btn-primary">Cadastre-se agora mesmo</a>

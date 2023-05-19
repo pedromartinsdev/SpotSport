@@ -5,31 +5,27 @@ Home
 {% endblock %}
 
 {% block main %}
-<div>
-    <body>
-        <a href="/events" class="btn btn-primary">Novo evento</a>
-        <h2 class="text-center mb-4">Meus eventos</h2>
-        <div class="container mt-5">
-            {% for event in myEvents %}
-            <ul class="list-group">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{ event.title }}
-                    <span class="badge badge-primary badge-pill">{{ event.date }}</span>
-                </li>
-            </ul>
-            {% endfor %}
-        </div>
-        <h2 class="text-center mb-4">Estou inscrito</h2>
-        <div class="container mt-5">
-            {% for subscribeEvent in subscribeEvents %}
-            <ul class="list-group">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{ subscribeEvent.event.title }}
-                    <span class="badge badge-primary badge-pill">{{ subscribeEvent.event.date }}</span>
-                </li>
-            </ul>
-            {% endfor %}
-        </div>
-    </body>
+<a href="/events" class="btn btn-primary">Novo evento</a>
+<h2 class="text-left mb-4">Meus eventos</h2>
+<div class="container mt-5">
+    {% for event in myEvents %}
+    <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ event.title }}
+            <span class="badge badge-primary badge-pill">{{ event.date }}</span>
+        </li>
+    </ul>
+    {% endfor %}
+</div>
+<h2 class="text-left mb-4">Estou inscrito</h2>
+<div class="container mt-5">
+    {% for subscribeEvent in subscribeEvents %}
+    <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ subscribeEvent.event.title }}
+            <span class="badge badge-primary badge-pill">{{ subscribeEvent.event.date }}</span>
+        </li>
+    </ul>
+    {% endfor %}
 </div>
 {% endblock %}

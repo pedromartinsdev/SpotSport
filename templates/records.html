@@ -6,21 +6,24 @@ Home
 
 {% block main %}
 
-<body>
-    <h2 class="text-center mb-4">Histórico</h2>
-    <div class="container mt-5">
-        {% for record in records %}
-        <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                {{ record.event.title }}
+<h2 class="text-center mb-4">Histórico</h2>
+<div class="container mt-5">
+    {% for record in records %}
+    <ul class="list-group">
+        <li class="record-itens list-group-item">
+            <div>
+                <span>{{ record.event.title }}</span>
+            </div>
+            <div class="record-badges">
+                <a href="#">Ver evento</a>
                 {% if record.user_id == record.event.creator_id %}
-                    <span style="background-color: #198754;" class="bg-success badge">Organizador(a)</span>
+                <span style="background-color: #198754;" class="bg-success badge">Organizador(a)</span>
                 {% else %}
-                    <span style="background-color: #0d6efd;" class="badge">Participante</span>
+                <span style="background-color: #0d6efd;" class="badge">Participante</span>
                 {% endif %}
-            </li>
-        </ul>
-        {% endfor %}
-    </div>
-</body>
+            </div>
+        </li>
+    </ul>
+    {% endfor %}
+</div>
 {% endblock %}

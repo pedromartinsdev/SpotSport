@@ -4,6 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -11,23 +13,35 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <link href="/static/favicon.ico" rel="icon">
   <link href="/static/styles.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet">
   <title>SpotSport: {% block title %}{% endblock %}</title>
 </head>
 
 <body>
   <header>
-    <nav class="navbar navbar-dark bg-dark d-flex justify-content-around">
+    <nav class="navbar">
       <div class="navbar-header">
-        <a class="navbar-brand" href="/">SpotSport</a>
+        <a class="navbar-brand" href="/home">SpotSport</a>
       </div>
       <ul class="nav navbar-nav">
-        <li><a class="nav-link" href="/home">Home</a></li>
-        <li><a class="nav-link" href="/event-list">Buscar eventos</a></li>
-        <li><a class="nav-link" href="/user-list">Novos amigos</a></li>
-        <li><a class="nav-link" href="/records">Meu histórico</a></li>
-        <li><a class="nav-link" href="/login"><strong class="text-uppercase">{{username}}</strong> <span
-              class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        <li><a class="nav-link" href="/home"><span class="glyphicon glyphicon-home"></span><span>Home</span></a></li>
+        <li><a class="nav-link" href="/event-list"><span
+              class="glyphicon glyphicon-calendar"></span><span>Eventos</span></a></li>
+        <li><a class="nav-link" href="/user-list"><span class="glyphicon glyphicon-user"></span><span>Pessoas</span></a>
+        </li>
+        <li><a class="nav-link" href="/records"><span class="glyphicon glyphicon-book"></span><span>Histórico</span></a>
+        </li>
       </ul>
+      <div class="nav-user">
+        <img class="nav-user-picture" src="{{user.photo}}" alt="">
+        <a href="/configure">
+          <div class="nav-user-text">
+            <span class="text-capitalize">{{user.firstName}} {{user.lastName}}</span><br>
+            <span class="text-secondary">{{user.email}}</span>
+          </div>
+        </a>
+        <a href="/logout" class="nav-user-logout glyphicon glyphicon-log-out"></a>
+      </div>
     </nav>
   </header>
   <div class="container">
