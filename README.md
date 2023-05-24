@@ -1,15 +1,17 @@
-# SPORTSPORT
+# SPOTSPORT 🏅
 
-
-
-1. [Description](#description)
-    1.1. [(EN)](#(EN))
-    1.2. [(PT-BR)](#(PT-BR))
-2. [Routes](#routes)
-    2.1. [/landing-page](#landing-page)
-    2.2. [/create-user](#create-user)
-
-
+1. [Description](#description) &nbsp;
+2. [Routes](#routes)&nbsp;
+    2.1. [/](#/)&nbsp;
+    2.2. [/landing-page](#landing-page)&nbsp;
+    2.3. [/create-user](#create-user)&nbsp;
+    2.4. [/passworod](#password)&nbsp;
+    2.5. [/login](#login)&nbsp;
+    2.6. [/create-event](#create-event)&nbsp;
+    2.7. [/user-list](#user-list)&nbsp;
+    2.8. [/event-list](#event-list)&nbsp;
+    2.9. [/settings](#settings)&nbsp;
+    2.10. [/records](#records)&nbsp;
 
 #### Description:
 
@@ -55,14 +57,15 @@ This route renders a "Forgot Password" page that prompts the user to enter their
 
 ## /login
 
+This route renders a login page where the user must enter their email and password, or click on the "Forgot Password" and "Create Account" links. f the email and password are correct, it will render the app's ```/home``` page. If they are incorrect, a flash message will appear with the text "Invalid email or password."
 
+![login](/static/login.gif)
 
-
-
-
-#### Description:
-#### Description:
-
-
+## /
+## /home
+## /create-event
+## /user-list
+## /settings
+## /records
 
 #### Video Demo:  <URL HERE>
