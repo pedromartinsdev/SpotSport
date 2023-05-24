@@ -83,6 +83,25 @@
   min-width: 20rem;
 }
 
+.modal-header, .modal-body{
+  display: flex;
+}
+
+.modal-picture{
+  width: 20%;
+  margin-right: 32px;
+}
+
+.modal-header {
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.modal-user-picture {
+  width: 100%;
+}
+
 .modal-content {
   font-size: 16px;
 }
@@ -116,4 +135,8 @@
   width: 20%;
   display: flex;
   justify-content: space-between;
+}
+
+.flash-messages>li{
+  list-style-type: none;
 }

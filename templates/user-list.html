@@ -34,10 +34,15 @@ Pessoas
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <div class="modal-body">
-                            <p>Nome: {{ user.name }}</p>
-                            <p>Data de nascimento: {{ user.birth_date }}</p>
-                            <p>Sexo: {{ user.gender }}</p>
-                            <p>País: {{ user.country }}</p>
+                            <div class="modal-picture">
+                                <img class="modal-user-picture" src="{{user.photo}}" alt="">
+                            </div>
+                            <div class="modal-user-data">
+                                <p>Nome: {{ user.firstName }} {{ user.lastName }}</p>
+                                <p>Data de nascimento: {{ user.birth_date }}</p>
+                                <p>Sexo: {{ user.gender }}</p>
+                                <p>País: {{ user.country }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>

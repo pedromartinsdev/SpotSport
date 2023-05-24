@@ -33,7 +33,11 @@
         </li>
       </ul>
       <div class="nav-user">
-        <img class="nav-user-picture" src="{{user.photo}}" alt="">
+        {% if user.photo %}
+          <img class="nav-user-picture" src="{{user.photo}}" alt="">
+        {% else %}
+          <img class="nav-user-picture" src="/static/user-default-profile.png" alt="">
+        {% endif %}
         <a href="/configure">
           <div class="nav-user-text">
             <span class="text-capitalize">{{user.firstName}} {{user.lastName}}</span><br>

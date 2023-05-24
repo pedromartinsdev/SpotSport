@@ -17,6 +17,10 @@ app.secret_key = "minha_chave_secreta"
 engine = create_engine('sqlite:///database.db')
 Base = declarative_base()
 
+Base.metadata.create_all(engine)
+Session = sessionmaker(bind=engine)
+session = Session()
+
 
 class User(Base, UserMixin):
     __tablename__ = 'users'
@@ -72,11 +76,6 @@ class Record(Base):
     event = relationship("Event", backref="records")
 
 
-Base.metadata.create_all(engine)
-Session = sessionmaker(bind=engine)
-session = Session()
-
-
 @login_manager.user_loader
 def load_user(user_id):
     return session.query(User).filter_by(id=user_id).first()
@@ -95,10 +94,8 @@ def login():
         user = session.query(User).filter_by(email=email).first()
         if user and check_password_hash(user.password, password):
             login_user(user)
-            flash('Logged in successfully.')
             return redirect(url_for('home'))
         else:
-            print("Senha inválida")
             flash('Invalid email or password.')
     return render_template('login.html')
 
@@ -195,12 +192,12 @@ def user_list():
     return render_template('user-list.html', users=users, user=current_user)
 
 
-@app.route('/users', methods=['GET', 'POST'])
-def create():
+@app.route('/create-user', methods=['GET', 'POST'])
+def createUser():
     if request.method == 'POST':
         firstName = request.form['first-name']
         lastName = request.form['last-name']
-        photo =request.form['photo']
+        photo = request.form['photo']
         username = request.form['username']
         email = request.form['email']
         password = generate_password_hash(request.form['password'])
@@ -210,16 +207,26 @@ def create():
         gender = request.form['gender']
         user_verify = False
         phone_number = request.form['phone_number']
+        
+
+        session = Session()
+
+        row = session.query(
+            User).filter(or_(User.username==username, User.email==email)).all()
+
+        if (len(row) != 0):
+            flash("Sentimos muito, mas esse nome de usuário/e-mail já existe!")
+            return redirect('/create-user')
+        
 
         user = User(firstName=firstName, lastName=lastName, username=username, photo=photo, country=country,
                     birth_date=birth_date, gender=gender, user_verify=user_verify, phone_number=phone_number, email=email, password=password)
 
-        session = Session()
         session.add(user)
         session.commit()
         session.close()
         return redirect('/login')
-    return render_template('users.html')
+    return render_template('create-user.html')
 
 
 @app.route('/events', methods=['GET', 'POST'])
