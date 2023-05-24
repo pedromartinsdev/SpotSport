@@ -1,17 +1,17 @@
 # SPOTSPORT 🏅
 
 1. [Description](#description) &nbsp;
-2. [Routes](#routes)&nbsp;
-    2.1. [/](#/)&nbsp;
-    2.2. [/landing-page](#landing-page)&nbsp;
-    2.3. [/create-user](#create-user)&nbsp;
-    2.4. [/passworod](#password)&nbsp;
-    2.5. [/login](#login)&nbsp;
-    2.6. [/create-event](#create-event)&nbsp;
-    2.7. [/user-list](#user-list)&nbsp;
-    2.8. [/event-list](#event-list)&nbsp;
-    2.9. [/settings](#settings)&nbsp;
-    2.10. [/records](#records)&nbsp;
+2. [Routes](#routes) &nbsp;
+    2.1. [/](#/) &nbsp;
+    2.2. [/landing-page](#landing-page) &nbsp;
+    2.3. [/create-user](#create-user) &nbsp;
+    2.4. [/passworod](#password) &nbsp;
+    2.5. [/login](#login) &nbsp;
+    2.6. [/create-event](#create-event) &nbsp;
+    2.7. [/user-list](#user-list) &nbsp;
+    2.8. [/event-list](#event-list) &nbsp;
+    2.9. [/settings](#settings) &nbsp;
+    2.10. [/records](#records) &nbsp;
 
 #### Description:
 
