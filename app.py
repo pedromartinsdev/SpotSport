@@ -1,6 +1,6 @@
 from dateutil.parser import parse
 from flask import Flask, render_template, request, redirect, flash, url_for, session
-from sqlalchemy import create_engine, Column, Integer, String, Date, Boolean, ForeignKey, func, or_
+from sqlalchemy import create_engine, Column, Integer, String, Date, Boolean, Text, ForeignKey, func, or_
 from sqlalchemy.orm import sessionmaker, relationship, join
 from sqlalchemy.orm import declarative_base
 from werkzeug.debug import DebuggedApplication
@@ -16,10 +16,6 @@ app.secret_key = "minha_chave_secreta"
 
 engine = create_engine('sqlite:///database.db')
 Base = declarative_base()
-
-Base.metadata.create_all(engine)
-Session = sessionmaker(bind=engine)
-session = Session()
 
 
 class User(Base, UserMixin):
@@ -75,7 +71,31 @@ class Record(Base):
     event_id = Column(Integer, ForeignKey('events.id'))
     event = relationship("Event", backref="records")
 
+class Country(Base):
+    __tablename__ = 'countries'
+    id = Column(Integer, primary_key=True)
+    country_name_int = Column(String)
 
+Base.metadata.create_all(engine)
+Session = sessionmaker(bind=engine)
+session = Session()
+
+def populate_countries():
+    row = session.query(Country).all()
+
+    if (len(row) == 0):
+        file_path = 'countries.json'
+
+        with open(file_path, 'r') as file:
+            json_content = json.load(file)
+
+        for item in json_content:
+            country_name_int = item['country_name_int']
+            country = Country(country_name_int=country_name_int)
+            session.add(country)
+
+        session.commit()
+    
 @login_manager.user_loader
 def load_user(user_id):
     return session.query(User).filter_by(id=user_id).first()
@@ -91,11 +111,15 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
+
         user = session.query(User).filter_by(email=email).first()
+        
         if user and check_password_hash(user.password, password):
             login_user(user)
+            print(user.password)
             return redirect(url_for('home'))
         else:
+            print(user.password)
             flash('Invalid email or password.')
     return render_template('login.html')
 
@@ -194,6 +218,8 @@ def user_list():
 
 @app.route('/create-user', methods=['GET', 'POST'])
 def createUser():
+    populate_countries()
+    countries = session.query(Country).all()
     if request.method == 'POST':
         firstName = request.form['first-name']
         lastName = request.form['last-name']
@@ -208,9 +234,6 @@ def createUser():
         user_verify = False
         phone_number = request.form['phone_number']
         
-
-        session = Session()
-
         row = session.query(
             User).filter(or_(User.username==username, User.email==email)).all()
 
@@ -218,7 +241,6 @@ def createUser():
             flash("Sentimos muito, mas esse nome de usuário/e-mail já existe!")
             return redirect('/create-user')
         
-
         user = User(firstName=firstName, lastName=lastName, username=username, photo=photo, country=country,
                     birth_date=birth_date, gender=gender, user_verify=user_verify, phone_number=phone_number, email=email, password=password)
 
@@ -226,7 +248,7 @@ def createUser():
         session.commit()
         session.close()
         return redirect('/login')
-    return render_template('create-user.html')
+    return render_template('create-user.html', countries=countries)
 
 
 @app.route('/events', methods=['GET', 'POST'])
@@ -255,15 +277,15 @@ def events():
     return render_template('events.html', events=events, user=current_user)
 
 
-@app.route('/configure', methods=['GET', 'POST'])
+@app.route('/settings', methods=['GET', 'POST'])
 @login_required
-def configure():
+def settings():
     if request.method == 'POST':
         print("daqui a pocuo eu termino")
     else:
-        return render_template('configure.html', user=current_user)
+        return render_template('settings.html', user=current_user)
 
 
 if __name__ == '__main__':
     app.debug = True
-    app.run(port=5000, debug=True, use_reloader=True)
+    app.run(port=5000, debug=True, use_reloader=True, threaded=False)

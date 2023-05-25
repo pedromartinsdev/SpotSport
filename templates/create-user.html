@@ -17,16 +17,21 @@
     <h6 class="flash-messages text-center alert alert-info">{{ messages[0] }}</h6>
     {% endif %}
     {% endwith %}
+
+
     <div class="row justify-content-center">
+
       <div class="col-lg-6">
         <form method="POST" action="/create-user">
           <div class="form-group">
             <label for="first-name">Primeiro nome:</label>
-            <input type="text" class="form-control" id="first-name" name="first-name" placeholder="Digite seu nome" required>
+            <input type="text" class="form-control" id="first-name" name="first-name" placeholder="Digite seu nome"
+              required>
           </div>
           <div class="form-group">
             <label for="last-name">Último nome:</label>
-            <input type="text" class="form-control" id="last-name" name="last-name" placeholder="Digite seu nome" required>
+            <input type="text" class="form-control" id="last-name" name="last-name" placeholder="Digite seu nome"
+              required>
           </div>
           <div class="form-group">
             <label for="photo">Foto(link):</label>
@@ -43,11 +48,16 @@
           </div>
           <div class="form-group">
             <label for="password">Senha:</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Digite sua senha" required>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Digite sua senha"
+              required>
           </div>
           <div class="form-group">
             <label for="country">País:</label>
-            <input type="text" class="form-control" id="country" name="country" placeholder="Digite seu país" required>
+            <select class="form-control" id="country" name="country">
+              {% for country in countries %}
+              <option value="{{country.id}}">{{country.country_name_int}}</option>
+              {% endfor %}
+            </select>
           </div>
           <div class="form-group">
             <label for="birth_date">Data de Nascimento:</label>
@@ -66,8 +76,13 @@
             <input type="tel" class="form-control" id="phone_number" name="phone_number"
               placeholder="Digite seu telefone" required>
           </div>
-          <div class="text-center">
-            <button type="submit" class="btn btn-primary">Curtir a vida</button>
+          <div class="d-flex justify-content-between">
+            <div class="text-left">
+              <a href="/login" class="btn btn-danger">Voltar</a>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary">Curtir a vida</button>
+            </div>
           </div>
         </form>
       </div>

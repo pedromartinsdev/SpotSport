@@ -1,17 +1,17 @@
 # SPOTSPORT 🏅
 
 1. [Description](#description) &nbsp;
-2. [Routes](#routes) &nbsp;
-2.1. [/](#/) &nbsp;
-2.2. [/landing-page](#landing-page) &nbsp;
-2.3. [/create-user](#create-user) &nbsp;
-2.4. [/passworod](#password) &nbsp;
-2.5. [/login](#login) &nbsp;
-2.6. [/create-event](#create-event) &nbsp;
-2.7. [/user-list](#user-list) &nbsp;
-2.8. [/event-list](#event-list) &nbsp;
-2.9. [/settings](#settings) &nbsp;
-2.10. [/records](#records) &nbsp;
+2. [Routes](#routes) </br>
+2.1. [/](#index (/)) </br>
+2.2. [/landing-page](#landing-page) </br>
+2.3. [/create-user](#create-user) </br>
+2.4. [/passworod](#password) </br>
+2.5. [/login](#login) </br>
+2.6. [/create-event](#create-event) </br>
+2.7. [/user-list](#user-list) </br>
+2.8. [/event-list](#event-list) </br>
+2.9. [/settings](#settings) </br>
+2.10. [/records](#records) </br>
 
 #### Description:
 
@@ -32,6 +32,11 @@ O SpotSport tem como ideia principal centralizar e divulgar eventos que incentiv
 No SpotSport, os usuários podem encontrar eventos que se encaixem melhor em seu estilo de vida.
 
 # Routes
+
+## Index (/)
+
+The `/` route checks if a user is logged in. If there is a logged-in user, it redirects to the `/home` route. If there is no logged-in user, it renders the `/landing-page`.
+
 ## /landing-page
 
 This route renders a landing page promoting the app.
@@ -61,9 +66,17 @@ This route renders a login page where the user must enter their email and passwo
 
 ![login](/static/login.gif)
 
-## /
 ## /home
+
+The `/home` route renders a page that displays all the events you are subscribed to and all the events you have created.
+
+Observations:
+- This route uses the `layout.html` template for the header, navigation (nav), and footer.
+- This route requires login (`@login_required`) to access.
+
 ## /create-event
+
+
 ## /user-list
 ## /settings
 ## /records
