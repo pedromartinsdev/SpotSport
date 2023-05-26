@@ -2,7 +2,7 @@
 
 1. [Description](#description) &nbsp;
 2. [Routes](#routes) </br>
-2.1. [/](#index) </br>
+2.1. [/index](#Index(/)) </br>
 2.2. [/landing-page](#landing-page) </br>
 2.3. [/create-user](#create-user) </br>
 2.4. [/passworod](#password) </br>
