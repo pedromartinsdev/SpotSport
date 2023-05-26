@@ -10,7 +10,7 @@ Eventos
   <h2 class="text-left">Eventos</h2>
   <form action="/event-list" method="POST">
     <div class="container-search">
-      <input type="text" name="city" class="form-control" placeholder="Nome do evento">
+      <input type="text" name="name" class="form-control" placeholder="Nome do evento">
       <button class="btn btn-primary" type="submit">Pesquisar</button>
     </div>
   </form>
@@ -41,9 +41,10 @@ Eventos
                 <span>Data: {{ event.cost }}</span>
                 <span>Data: {{ event.date }}</span>
                 <span>Local: {{ event.location }}</span>
+                </br>
                 <form method="POST" action="/records">
                   <input name="id" style="display: none;" value="{{ event.id }}"></input>
-                  <button type="submit" class="btn btn-primary">Inscrever</button>
+                  <button type="submit" class="btn btn-success">Inscrever-se</button>
                 </form>
               </div>
             </div>

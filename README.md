@@ -40,13 +40,12 @@ The `/` route checks if a user is logged in. If there is a logged-in user, it re
 ## /landing-page
 
 This route renders a landing page promoting the app.
-![landing page imagem](/static/landing-page.gif)
+![landing page imagem](/assets/landing-page.gif)
 
 ## /create-user
 
 This route renders a register page.
-![landing page imagem](/static/create-user.gif)
-
+![landing page imagem](/assets/create-user.gif)
 
 In this route, the user fills in their information for registration.
 It's important to note that all fields are mandatory, except for the photo link.
@@ -57,14 +56,13 @@ Before allowing a new user to be created, a database query is performed to check
 
 This route renders a "Forgot Password" page that prompts the user to enter their email address to receive a password reset link.
 
-![landing page imagem](/static/create-user.gif)
-
+![landing page imagem](/assets/create-user.gif)
 
 ## /login
 
 This route renders a login page where the user must enter their email and password, or click on the "Forgot Password" and "Create Account" links. f the email and password are correct, it will render the app's ```/home``` page. If they are incorrect, a flash message will appear with the text "Invalid email or password."
 
-![login](/static/login.gif)
+![login](/assets/login.gif)
 
 ## /home
 
@@ -76,6 +74,13 @@ Observations:
 
 ## /create-event
 
+This route allows for creating an event and is triggered by the "New Event" button on the Events page.
+
+All fields are required to be filled in, including event `title`, `description`, `cost`, `location`, `date`, and `time`.
+
+![login](/assets/create-event.gif)
+
+## /event-list
 
 ## /user-list
 ## /settings

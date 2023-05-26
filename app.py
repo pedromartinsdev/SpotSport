@@ -3,7 +3,6 @@ from flask import Flask, render_template, request, redirect, flash, url_for, ses
 from sqlalchemy import create_engine, Column, Integer, String, Date, Boolean, Float, Text, ForeignKey, func, or_
 from sqlalchemy.orm import sessionmaker, relationship, join
 from sqlalchemy.orm import declarative_base
-from werkzeug.debug import DebuggedApplication
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 import json
@@ -34,22 +33,6 @@ class User(Base, UserMixin):
     user_verify = Column(Boolean, default=False)
     country_id = Column(Integer, ForeignKey('countries.id'))
     country = relationship("Country", backref="users")
-
-    def get_id(self):
-        return str(self.id)
-
-    def get_email(self):
-        return str(self.email)
-
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
-
 
 class Event(Base):
     __tablename__ = 'events'
@@ -193,8 +176,8 @@ def index():
 @login_required
 def event_list():
     if request.method == 'POST':
-        city = request.form['city']
-        events = session.query(Event).filter_by(location=city)
+        name = request.form['name']
+        events = session.query(Event).filter_by(title=name.lower()).all()
         return render_template('event-list.html', events=events, user=current_user)
     else:
         events = session.query(Event).all()
@@ -272,7 +255,7 @@ def events():
 
         date = parse(date_str).date()
 
-        event = Event(title=title, description=description, location=location,
+        event = Event(title=title.lower(), description=description, location=location,
                       time=time, date=date, creator_id=creator_id)
 
         session.add(event)
