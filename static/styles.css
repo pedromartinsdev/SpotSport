@@ -46,7 +46,6 @@
   border-radius: 100%;
   height: 4rem;
   width: 4rem;
-
 }
 
 .nav-user-text {
@@ -77,6 +76,9 @@
   background-color: #f9f9f9;
   padding: 32px 32px;
   min-height: 24rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card-event{
@@ -146,4 +148,8 @@
   flex-direction: column;
 
   padding: 16px;
+}
+
+.modal-user-picture{
+  width: 100%;
 }

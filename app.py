@@ -152,7 +152,7 @@ def records():
         session.add(record)
         session.commit()
         session.close()
-        records = session.query(Record).filter_by(user_id=user_id)
+        records = session.query(Record).filter_by(user_id=user_id).all()
         return render_template('records.html', records=records, user=current_user)
     else:
         records = session.query(Record).filter_by(user_id=user_id)
@@ -227,6 +227,9 @@ def createUser():
             flash("Sentimos muito, mas esse nome de usuário/e-mail já existe!")
             return redirect('/create-user')
         
+        if not photo:
+            photo = "assets/user-default-profile.png"
+       
         if confirmPassword == password:
             newHash = generate_password_hash(request.form['password'])
             newUser = User(firstName=firstName, lastName=lastName, username=username, photo=photo, country_id=country,

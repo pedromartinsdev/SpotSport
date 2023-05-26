@@ -12,10 +12,12 @@ Home
     <ul class="list-group">
         <li class="record-itens list-group-item">
             <div>
+                <span>{{ record.event.date }}</span>
+            </div>
+            <div>
                 <span>{{ record.event.title }}</span>
             </div>
             <div class="record-badges">
-                <a href="#">Ver evento</a>
                 {% if record.user_id == record.event.creator_id %}
                 <span style="background-color: #198754;" class="bg-success badge">Organizador(a)</span>
                 {% else %}

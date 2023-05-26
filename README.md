@@ -2,14 +2,14 @@
 
 1. [Description](#description) &nbsp;
 2. [Routes](#routes) </br>
-2.1. [/](#index (/)) </br>
+2.1. [/](#index) </br>
 2.2. [/landing-page](#landing-page) </br>
 2.3. [/create-user](#create-user) </br>
 2.4. [/passworod](#password) </br>
 2.5. [/login](#login) </br>
 2.6. [/create-event](#create-event) </br>
-2.7. [/user-list](#user-list) </br>
-2.8. [/event-list](#event-list) </br>
+2.7. [/event-list](#event-list) </br>
+2.8. [/user-list](#user-list) </br>
 2.9. [/settings](#settings) </br>
 2.10. [/records](#records) </br>
 
@@ -68,7 +68,6 @@ This route renders a login page where the user must enter their email and passwo
 
 The `/home` route renders a page that displays all the events you are subscribed to and all the events you have created.
 
-Observations:
 - This route uses the `layout.html` template for the header, navigation (nav), and footer.
 - This route requires login (`@login_required`) to access.
 
@@ -76,14 +75,42 @@ Observations:
 
 This route allows for creating an event and is triggered by the "New Event" button on the Events page.
 
-All fields are required to be filled in, including event `title`, `description`, `cost`, `location`, `date`, and `time`.
+All fields are required to be filled in, including event `title`, `description`, `cost`, `location`, `date` and `time`.
 
 ![login](/assets/create-event.gif)
 
 ## /event-list
 
+This route is responsible for listing all the events that have been created, allowing users to sign up for them. It also includes a search bar that allows users to search for events by name. Additionally, there is a "Create New Event" button that redirects users to the `/events` route.
+
+![login](/assets/event-list.png)
+
 ## /user-list
+
+This route lists all the registered users on SpotSport, excluding the user who is performing the search.
+
+![login](/assets/user-list.png)
+
 ## /settings
+
+This route allows users to change their profile picture and password.
+
+- The photo field accepts only a URL for the image.
+
+![login](/assets/settings.gif)
+
 ## /records
 
+This route displays the events in which the user is the creator as well as the events they have signed up for.
+The POST request for this route is triggered when the user clicks on "Sign Up" on the events page.
+
+![records](/assets/records.png)
+
 #### Video Demo:  <URL HERE>
+
+
+#### Credits
+
+- User icon - [Undraw.co](https://undraw.co/)
+- User photos - [This-Person-Does-not-Exist.com](https://this-person-does-not-exist.com/)
+- Lista de países - [Github - jonasruth](https://gist.github.com/jonasruth/61bde1fcf0893bd35eea)

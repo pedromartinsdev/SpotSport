@@ -34,9 +34,13 @@
       </ul>
       <div class="nav-user">
         {% if user.photo %}
-          <img class="nav-user-picture" src="{{user.photo}}" alt="">
+          <img class="nav-user-picture" src="{{user.photo}}" alt="user photo">
         {% else %}
-          <img class="nav-user-picture" src="/assets/user-default-profile.png" alt="">
+          {% if user.gender == 'masculino' %}
+            <img class="nav-user-picture" src="/static/user-default-profile-male.svg" alt="User photo">
+          {% else %}
+            <img class="nav-user-picture" src="/static/user-default-profile-female.svg" alt="User photo">
+          {% endif %}
         {% endif %}
         <a href="/settings">
           <div class="nav-user-text">

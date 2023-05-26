@@ -18,8 +18,16 @@ Pessoas
     {% for user in users %}
     <div class="col-md-2">
         <div class="card">
-            <div class="modal-picture">
-                <img class="modal-user-picture" src="{{user.photo}}" alt="">
+            <div>
+                {% if user.photo %}
+                <img class="modal-user-picture" src="{{user.photo}}" alt="User photo">
+                {% else %}
+                    {% if user.gender == 'masculino' %}
+                        <img class="modal-user-picture" src="/static/user-default-profile-male.svg" alt="User photo">
+                    {% else %}
+                        <img class="modal-user-picture" src="/static/user-default-profile-female.svg" alt="User photo">
+                    {% endif %}
+                {% endif %}
             </div>
             <h4 class="card-title text-capitalize">{{user.firstName}} {{user.lastName}}</h4>
             <span class="card-text">@{{user.username}}</span></br>
