@@ -36,11 +36,11 @@ Eventos
                 <h2 class="modal-title"> {{ event.title }}</h2>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
               </div>
-              <div class="modal-body">
+              <div class="modal-body-event">
                 <p>Descrição: {{ event.description }}</p>
-                <p>Data: {{ event.date }}</p>
-                <p>Local: Lago - <span> Horário 12:30hrs</span></p>
-                <p>Cidade: {{ event.location }} - País: {{ event.country }}</p>
+                <span>Data: {{ event.cost }}</span>
+                <span>Data: {{ event.date }}</span>
+                <span>Local: {{ event.location }}</span>
                 <form method="POST" action="/records">
                   <input name="id" style="display: none;" value="{{ event.id }}"></input>
                   <button type="submit" class="btn btn-primary">Inscrever</button>

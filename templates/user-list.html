@@ -18,9 +18,12 @@ Pessoas
     {% for user in users %}
     <div class="col-md-2">
         <div class="card">
-            <h4 class="card-title text-capitalize">{{user.name}}</h4>
-            <p class="card-text">@{{user.username}} - {{user.country}}</p>
-
+            <div class="modal-picture">
+                <img class="modal-user-picture" src="{{user.photo}}" alt="">
+            </div>
+            <h4 class="card-title text-capitalize">{{user.firstName}} {{user.lastName}}</h4>
+            <span class="card-text">@{{user.username}}</span></br>
+            <span class="card-text">{{user.country.country_name_int}}</span></br>
             <!-- Botão para abrir o modal -->
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal-{{ user.id }}">Ler
                 mais</button>
@@ -41,7 +44,7 @@ Pessoas
                                 <p>Nome: {{ user.firstName }} {{ user.lastName }}</p>
                                 <p>Data de nascimento: {{ user.birth_date }}</p>
                                 <p>Sexo: {{ user.gender }}</p>
-                                <p>País: {{ user.country }}</p>
+                                <p>País: {{ user.country.country_name_int }}</p>
                             </div>
                         </div>
                     </div>

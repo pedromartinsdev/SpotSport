@@ -1,6 +1,6 @@
 from dateutil.parser import parse
 from flask import Flask, render_template, request, redirect, flash, url_for, session
-from sqlalchemy import create_engine, Column, Integer, String, Date, Boolean, Text, ForeignKey, func, or_
+from sqlalchemy import create_engine, Column, Integer, String, Date, Boolean, Float, Text, ForeignKey, func, or_
 from sqlalchemy.orm import sessionmaker, relationship, join
 from sqlalchemy.orm import declarative_base
 from werkzeug.debug import DebuggedApplication
@@ -29,10 +29,11 @@ class User(Base, UserMixin):
     phone_number = Column(String(20))
     username = Column(String(80), unique=True)
     password = Column(String(80))
-    country = Column(String(50))
     birth_date = Column(Date)
     gender = Column(String(10))
     user_verify = Column(Boolean, default=False)
+    country_id = Column(Integer, ForeignKey('countries.id'))
+    country = relationship("Country", backref="users")
 
     def get_id(self):
         return str(self.id)
@@ -59,6 +60,7 @@ class Event(Base):
     location = Column(String)
     date = Column(Date)
     time = Column(String)
+    cost = Column(Float)
     creator_id = Column(Integer, ForeignKey('users.id'))
     user = relationship("User", backref="events")
 
@@ -75,6 +77,8 @@ class Country(Base):
     __tablename__ = 'countries'
     id = Column(Integer, primary_key=True)
     country_name_int = Column(String)
+
+
 
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
@@ -116,10 +120,8 @@ def login():
         
         if user and check_password_hash(user.password, password):
             login_user(user)
-            print(user.password)
             return redirect(url_for('home'))
         else:
-            print(user.password)
             flash('Invalid email or password.')
     return render_template('login.html')
 
@@ -219,14 +221,15 @@ def user_list():
 @app.route('/create-user', methods=['GET', 'POST'])
 def createUser():
     populate_countries()
-    countries = session.query(Country).all()
+    countries = session.query(Country).order_by(Country.country_name_int.asc()).all()
     if request.method == 'POST':
         firstName = request.form['first-name']
         lastName = request.form['last-name']
         photo = request.form['photo']
         username = request.form['username']
         email = request.form['email']
-        password = generate_password_hash(request.form['password'])
+        password = request.form['password']
+        confirmPassword = request.form['confirm-password']
         country = request.form['country']
         birth_date_str = request.form['birth_date']
         birth_date = parse(birth_date_str).date()
@@ -241,10 +244,15 @@ def createUser():
             flash("Sentimos muito, mas esse nome de usuário/e-mail já existe!")
             return redirect('/create-user')
         
-        user = User(firstName=firstName, lastName=lastName, username=username, photo=photo, country=country,
-                    birth_date=birth_date, gender=gender, user_verify=user_verify, phone_number=phone_number, email=email, password=password)
+        if confirmPassword == password:
+            newHash = generate_password_hash(request.form['password'])
+            newUser = User(firstName=firstName, lastName=lastName, username=username, photo=photo, country_id=country,
+                    birth_date=birth_date, gender=gender, user_verify=user_verify, phone_number=phone_number, email=email, password=newHash)
+        else:
+            flash("As senhas não são iguais")
+            return redirect('/create-user')
 
-        session.add(user)
+        session.add(newUser)
         session.commit()
         session.close()
         return redirect('/login')
@@ -281,7 +289,26 @@ def events():
 @login_required
 def settings():
     if request.method == 'POST':
-        print("daqui a pocuo eu termino")
+        photo = request.form['photo']
+        password = request.form['password']
+        confirmPassword = request.form['confirm-password']
+        if photo:
+            user = session.query(User).filter_by(id=current_user.id).first()
+            user.photo = photo
+            session.commit()
+            flash("Foto alterada!")
+        if password or confirmPassword:
+            if password == confirmPassword:
+                user = session.query(User).filter_by(id=current_user.id).first()
+                user.password = generate_password_hash(password)
+                session.commit()
+                flash("Senha alterada!")
+                return render_template('settings.html', user=current_user)
+            else:
+                flash("Senhas diferentes!")
+                return render_template('settings.html', user=current_user)
+        else:
+            return render_template('settings.html', user=current_user)
     else:
         return render_template('settings.html', user=current_user)
 

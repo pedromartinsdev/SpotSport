@@ -140,3 +140,10 @@
 .flash-messages>li{
   list-style-type: none;
 }
+
+.modal-body-event{
+  display: flex;
+  flex-direction: column;
+
+  padding: 16px;
+}
