@@ -1,7 +1,7 @@
 from dateutil.parser import parse
 from flask import Flask, render_template, request, redirect, flash, url_for, session
-from sqlalchemy import create_engine, Column, Integer, String, Date, Boolean, Float, Text, ForeignKey, func, or_
-from sqlalchemy.orm import sessionmaker, relationship, join
+from sqlalchemy import create_engine, Column, Integer, String, Date, Boolean, Float, Text, ForeignKey, func, or_, not_
+from sqlalchemy.orm import sessionmaker, relationship, join, joinedload
 from sqlalchemy.orm import declarative_base
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
@@ -12,11 +12,9 @@ app = Flask(__name__)
 login_manager = LoginManager(app)
 login_manager.init_app(app)
 app.secret_key = "minha_chave_secreta"
-
-engine = create_engine('sqlite:///database.db')
 Base = declarative_base()
 
-
+""" modelo das tabelas users, events, records e countries """
 class User(Base, UserMixin):
     __tablename__ = 'users'
 
@@ -47,9 +45,9 @@ class Event(Base):
     creator_id = Column(Integer, ForeignKey('users.id'))
     user = relationship("User", backref="events")
 
-
 class Record(Base):
     __tablename__ = 'records'
+    
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'))
     user = relationship("User", backref="records")
@@ -58,15 +56,18 @@ class Record(Base):
 
 class Country(Base):
     __tablename__ = 'countries'
+
     id = Column(Integer, primary_key=True)
     country_name_int = Column(String)
 
 
-
+""" Cria as tabelas do banco no modelo acima e inicia a session """
+engine = create_engine('sqlite:///database.db')
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
 
+""" Quando o banco não tiver nenhum país popula com os países do countries.json """
 def populate_countries():
     row = session.query(Country).all()
 
@@ -79,19 +80,29 @@ def populate_countries():
         for item in json_content:
             country_name_int = item['country_name_int']
             country = Country(country_name_int=country_name_int)
-            session.add(country)
-
+            session.add(country)  
         session.commit()
-    
+
+""" @app.before_request
+def before_request(response):
+    session = Session()
+    return response """
+
+""" Trata o código para evitar multi thread """
+@app.after_request
+def after_request(response):
+    session.close()
+    return response
+
+""" retorna o usuário que está logado """
 @login_manager.user_loader
 def load_user(user_id):
     return session.query(User).filter_by(id=user_id).first()
 
-
+""" Rotas da aplicação """
 @app.route('/landing-page')
 def landing_page():
     return render_template('landing-page.html')
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -103,18 +114,18 @@ def login():
         
         if user and check_password_hash(user.password, password):
             login_user(user)
+
             return redirect(url_for('home'))
         else:
             flash('Invalid email or password.')
+    
     return render_template('login.html')
-
 
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect('/login')
-
 
 @app.route('/password', methods=['GET', 'POST'])
 def password():
@@ -123,16 +134,14 @@ def password():
         return render_template('password-apologize.html', email=email)
     return render_template('password.html')
 
-
 @app.route('/home')
 @login_required
 def home():
     user_id = current_user.id
     myEvents = session.query(Event).filter_by(creator_id=user_id)
     subscribeEvents = session.query(Record).filter_by(user_id=user_id)
-
+    
     return render_template('home.html', myEvents=myEvents, subscribeEvents=subscribeEvents, user=current_user)
-
 
 @app.route('/records', methods=['GET', 'POST'])
 @login_required
@@ -147,30 +156,26 @@ def records():
 
         if (len(row) != 0):
             events = session.query(Event).all()
+
             return render_template('event-list.html', events=events, user=current_user)
 
         session.add(record)
         session.commit()
-        session.close()
         records = session.query(Record).filter_by(user_id=user_id).all()
         return render_template('records.html', records=records, user=current_user)
     else:
-        records = session.query(Record).filter_by(user_id=user_id)
+        records = session.query(Record).filter_by(user_id=user_id).all()
         return render_template('records.html', records=records, user=current_user)
-
 
 @app.route('/')
 def index():
     if current_user.is_authenticated:
-
         user_id = current_user.id
         myEvents = session.query(Event).filter_by(creator_id=user_id)
         subscribeEvents = session.query(Record).filter_by(user_id=user_id)
-
         return render_template('home.html', myEvents=myEvents, subscribeEvents=subscribeEvents, user=current_user)
     else:
         return render_template('landing-page.html')
-
 
 @app.route('/event-list', methods=['GET', 'POST'])
 @login_required
@@ -181,8 +186,8 @@ def event_list():
         return render_template('event-list.html', events=events, user=current_user)
     else:
         events = session.query(Event).all()
+    
     return render_template('event-list.html', events=events, user=current_user)
-
 
 @app.route('/user-list', methods=['GET', 'POST'])
 @login_required
@@ -193,17 +198,16 @@ def user_list():
         users = session.query(User).filter_by(username=username)
         return render_template('user-list.html', users=users, user=current_user)
     else:
-        users = session.query(User).all()
+        users = session.query(User).options(joinedload(User.country)).all()
         for user in users:
             if user.id == user_id:
                 index = users.index(user)
                 del users[index]
+    
     return render_template('user-list.html', users=users, user=current_user)
-
 
 @app.route('/create-user', methods=['GET', 'POST'])
 def createUser():
-    populate_countries()
     countries = session.query(Country).order_by(Country.country_name_int.asc()).all()
     if request.method == 'POST':
         firstName = request.form['first-name']
@@ -226,10 +230,10 @@ def createUser():
         if (len(row) != 0):
             flash("Sentimos muito, mas esse nome de usuário/e-mail já existe!")
             return redirect('/create-user')
-        
+   
         if not photo:
             photo = "assets/user-default-profile.png"
-       
+
         if confirmPassword == password:
             newHash = generate_password_hash(request.form['password'])
             newUser = User(firstName=firstName, lastName=lastName, username=username, photo=photo, country_id=country,
@@ -237,13 +241,11 @@ def createUser():
         else:
             flash("As senhas não são iguais")
             return redirect('/create-user')
-
         session.add(newUser)
         session.commit()
-        session.close()
         return redirect('/login')
+    
     return render_template('create-user.html', countries=countries)
-
 
 @app.route('/events', methods=['GET', 'POST'])
 @login_required
@@ -252,6 +254,7 @@ def events():
         title = request.form['title']
         description = request.form['description']
         location = request.form['location']
+        cost = request.form['cost']
         date_str = request.form['date']
         time = request.form['time']
         creator_id = current_user.id
@@ -259,17 +262,15 @@ def events():
         date = parse(date_str).date()
 
         event = Event(title=title.lower(), description=description, location=location,
-                      time=time, date=date, creator_id=creator_id)
+                      time=time, date=date, creator_id=creator_id, cost=cost)
 
         session.add(event)
         session.commit()
-
         return redirect('event-list')
 
     events = session.query(Event).all()
-    session.close()
+    
     return render_template('events.html', events=events, user=current_user)
-
 
 @app.route('/settings', methods=['GET', 'POST'])
 @login_required
@@ -298,7 +299,5 @@ def settings():
     else:
         return render_template('settings.html', user=current_user)
 
-
 if __name__ == '__main__':
-    app.debug = True
-    app.run(port=5000, debug=True, use_reloader=True, threaded=False)
+    app.run()

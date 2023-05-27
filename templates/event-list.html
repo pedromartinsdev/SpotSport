@@ -22,7 +22,7 @@ Eventos
     <div class="col-md-3">
       <div class="card card-event">
         <h4 class="card-title text-capitalize">{{event.title}}</h4>
-        <p class="card-text">{{event.location}} - {{event.country}}</p>
+        <p class="card-text">{{event.location}}</p>
 
         <!-- Botão para abrir o modal -->
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal-{{ event.id }}">Ler
@@ -33,12 +33,12 @@ Eventos
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h2 class="modal-title"> {{ event.title }}</h2>
+                <h2 class="modal-title text-capitalize"> {{ event.title }}</h2>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
               </div>
               <div class="modal-body-event">
                 <p>Descrição: {{ event.description }}</p>
-                <span>Data: {{ event.cost }}</span>
+                <span>Custo: {{ event.cost }}</span>
                 <span>Data: {{ event.date }}</span>
                 <span>Local: {{ event.location }}</span>
                 </br>

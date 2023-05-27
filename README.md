@@ -2,16 +2,19 @@
 
 1. [Description](#description) &nbsp;
 2. [Routes](#routes) </br>
-2.1. [/index](#Index(/)) </br>
-2.2. [/landing-page](#landing-page) </br>
-2.3. [/create-user](#create-user) </br>
-2.4. [/passworod](#password) </br>
-2.5. [/login](#login) </br>
-2.6. [/create-event](#create-event) </br>
-2.7. [/event-list](#event-list) </br>
-2.8. [/user-list](#user-list) </br>
-2.9. [/settings](#settings) </br>
-2.10. [/records](#records) </br>
+  2.1. [/index](#Index(/)) </br>
+  2.2. [/landing-page](#landing-page) </br>
+  2.3. [/create-user](#create-user) </br>
+  2.4. [/passworod](#password) </br>
+  2.5. [/login](#login) </br>
+  2.6. [/create-event](#create-event) </br>
+  2.7. [/event-list](#event-list) </br>
+  2.8. [/user-list](#user-list) </br>
+  2.9. [/settings](#settings) </br>
+  2.10. [/records](#records) </br>
+3. [Video Demo](#video-demo)
+4. [Technologies Used](#technologies-used)
+5. [Credits](#credits)
 
 #### Description:
 
@@ -40,12 +43,12 @@ The `/` route checks if a user is logged in. If there is a logged-in user, it re
 ## /landing-page
 
 This route renders a landing page promoting the app.
-![landing page imagem](/assets/landing-page.gif)
+![landing-page](/assets/landing-page.gif)
 
 ## /create-user
 
 This route renders a register page.
-![landing page imagem](/assets/create-user.gif)
+![crete-user](/assets/create-user.gif)
 
 In this route, the user fills in their information for registration.
 It's important to note that all fields are mandatory, except for the photo link.
@@ -55,8 +58,9 @@ Before allowing a new user to be created, a database query is performed to check
 ## /password
 
 This route renders a "Forgot Password" page that prompts the user to enter their email address to receive a password reset link.
+And then render the page password-apologize.html.
 
-![landing page imagem](/assets/create-user.gif)
+![password](/assets/password.gif)
 
 ## /login
 
@@ -71,45 +75,70 @@ The `/home` route renders a page that displays all the events you are subscribed
 - This route uses the `layout.html` template for the header, navigation (nav), and footer.
 - This route requires login (`@login_required`) to access.
 
+![home](/assets/home.png)
+
 ## /create-event
 
 This route allows for creating an event and is triggered by the "New Event" button on the Events page.
 
 All fields are required to be filled in, including event `title`, `description`, `cost`, `location`, `date` and `time`.
 
-![login](/assets/create-event.gif)
+- This route uses the `layout.html` template for the header, navigation (nav), and footer.
+- This route requires login (`@login_required`) to access.
+
+![create-event](/assets/create-event.gif)
 
 ## /event-list
 
 This route is responsible for listing all the events that have been created, allowing users to sign up for them. It also includes a search bar that allows users to search for events by name. Additionally, there is a "Create New Event" button that redirects users to the `/events` route.
 
-![login](/assets/event-list.png)
+- This route uses the `layout.html` template for the header, navigation (nav), and footer.
+- This route requires login (`@login_required`) to access.
+
+![event-list](/assets/event-list.png)
 
 ## /user-list
 
 This route lists all the registered users on SpotSport, excluding the user who is performing the search.
 
-![login](/assets/user-list.png)
+- This route uses the `layout.html` template for the header, navigation (nav), and footer.
+- This route requires login (`@login_required`) to access.
+
+![user-list](/assets/user-list.png)
 
 ## /settings
 
 This route allows users to change their profile picture and password.
 
+- This route uses the `layout.html` template for the header, navigation (nav), and footer.
+- This route requires login (`@login_required`) to access.
 - The photo field accepts only a URL for the image.
 
-![login](/assets/settings.gif)
+![settings](/assets/settings.gif)
 
 ## /records
 
 This route displays the events in which the user is the creator as well as the events they have signed up for.
 The POST request for this route is triggered when the user clicks on "Sign Up" on the events page.
 
+- This route uses the `layout.html` template for the header, navigation (nav), and footer.
+- This route requires login (`@login_required`) to access.
+
 ![records](/assets/records.png)
 
-#### Video Demo:  <URL HERE>
+## Video-Demo 
 
+<URL HERE>
 
-#### Credits
+## Technologies-used
+
+- Python
+- Flask
+- HTML
+- CSS
+- JavaScript
+
+## Credits
 
 - User icon - [Undraw.co](https://undraw.co/)
 - User photos - [This-Person-Does-not-Exist.com](https://this-person-does-not-exist.com/)
