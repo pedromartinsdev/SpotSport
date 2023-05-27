@@ -2,7 +2,7 @@
 
 1. [Description](#description) &nbsp;
 2. [Routes](#routes) </br>
-  2.1. [/index](#Index(/)) </br>
+  2.1. [/index](#index) </br>
   2.2. [/landing-page](#landing-page) </br>
   2.3. [/create-user](#create-user) </br>
   2.4. [/passworod](#password) </br>
@@ -37,7 +37,7 @@ No SpotSport, os usuários podem encontrar eventos que se encaixem melhor em seu
 
 ## Routes
 
-### Index (/)
+### Index
 
 The `/` route checks if a user is logged in. If there is a logged-in user, it redirects to the `/home` route. If there is no logged-in user, it renders the `/landing-page`.
 
@@ -173,8 +173,7 @@ def load_user(user_id):
 
 ## Video-Demo
 
-<URL HERE>
-
+[Video demo](www.youtbe.com)
 
 ## Installation
 
@@ -198,4 +197,4 @@ def load_user(user_id):
 
 - User icon - [Undraw.co](https://undraw.co/)
 - User photos - [This-Person-Does-not-Exist.com](https://this-person-does-not-exist.com/)
-- Lista de países - [Github - jonasruth](https://gist.github.com/jonasruth/61bde1fcf0893bd35eea)
+- Country list - [Github - jonasruth](https://gist.github.com/jonasruth/61bde1fcf0893bd35eea)
