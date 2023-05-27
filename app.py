@@ -83,11 +83,6 @@ def populate_countries():
             session.add(country)  
         session.commit()
 
-""" @app.before_request
-def before_request(response):
-    session = Session()
-    return response """
-
 """ Trata o código para evitar multi thread """
 @app.after_request
 def after_request(response):
