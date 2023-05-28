@@ -173,7 +173,9 @@ def load_user(user_id):
 
 ## Video-Demo
 
-[Video demo](www.youtbe.com)
+[Portuguese](https://www.youtube.com/watch?v=xTfosokgzyA)
+
+[English](https://www.youtube.com/watch?v=kM24jA7HlPY) - Translated with the Captions app AI.
 
 ## Installation
 
