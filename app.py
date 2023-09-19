@@ -67,7 +67,7 @@ Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-""" Quando o banco não tiver nenhum país popula com os países do countries.json """
+""" Quando o banco nao tiver nenhum pais popula com os países do countries.json """
 def populate_countries():
     row = session.query(Country).all()
 
@@ -85,18 +85,18 @@ def populate_countries():
 
 populate_countries()
 
-""" Trata o código para evitar multi thread """
+""" Trata o codigo para evitar multi thread """
 @app.after_request
 def after_request(response):
     session.close()
     return response
 
-""" retorna o usuário que está logado """
+""" retorna o usuário que esta logado """
 @login_manager.user_loader
 def load_user(user_id):
     return session.query(User).filter_by(id=user_id).first()
 
-""" Rotas da aplicação """
+""" Rotas da aplicacao """
 @app.route('/landing-page')
 def landing_page():
     return render_template('landing-page.html')
