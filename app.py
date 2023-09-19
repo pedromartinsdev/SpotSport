@@ -225,7 +225,7 @@ def createUser():
             User).filter(or_(User.username==username, User.email==email)).all()
 
         if (len(row) != 0):
-            flash("Sentimos muito, mas esse nome de usuário/e-mail já existe!")
+            flash("Sentimos muito, mas esse nome de usuario/e-mail ja existe!")
             return redirect('/create-user')
    
         if not photo:
@@ -236,7 +236,7 @@ def createUser():
             newUser = User(firstName=firstName, lastName=lastName, username=username, photo=photo, country_id=country,
                     birth_date=birth_date, gender=gender, user_verify=user_verify, phone_number=phone_number, email=email, password=newHash)
         else:
-            flash("As senhas não são iguais")
+            flash("As senhas nao sao iguais")
             return redirect('/create-user')
         session.add(newUser)
         session.commit()
