@@ -67,7 +67,7 @@ Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-""" Quando o banco nao tiver nenhum pais popula com os países do countries.json """
+""" Quando o banco nao tiver nenhum pais popula com os paises do countries.json """
 def populate_countries():
     row = session.query(Country).all()
 
