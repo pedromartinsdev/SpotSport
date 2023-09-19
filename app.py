@@ -91,7 +91,7 @@ def after_request(response):
     session.close()
     return response
 
-""" retorna o usuário que esta logado """
+""" retorna o usuario que esta logado """
 @login_manager.user_loader
 def load_user(user_id):
     return session.query(User).filter_by(id=user_id).first()
