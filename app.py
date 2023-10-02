@@ -1,4 +1,4 @@
-from dateutil.parser import *
+from dateutil.parser import parse
 from flask import Flask, render_template, request, redirect, flash, url_for, session
 from sqlalchemy import create_engine, Column, Integer, String, Date, Boolean, Float, Text, ForeignKey, func, or_, not_
 from sqlalchemy.orm import sessionmaker, relationship, join, joinedload
