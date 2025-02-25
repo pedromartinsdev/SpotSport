@@ -62,7 +62,7 @@ class Country(Base):
 
 
 """ Cria as tabelas do banco no modelo acima e inicia a session """
-engine = create_engine('sqlite:///database.db')
+engine = create_engine("sqlite:////tmp/database.db")
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
